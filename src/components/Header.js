@@ -1,5 +1,5 @@
 const Header = () => {
-    return <header>Header</header>;
+    return <header>Find the Pokemon!</header>;
 };
 
 export default Header;

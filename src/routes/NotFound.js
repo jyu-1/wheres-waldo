@@ -5,11 +5,7 @@ const NotFound = () => {
         document.title = "Find the Pokemon! | Page Not Found";
     }, []);
 
-    return (
-        <div>
-            <div>404: Page not found</div>
-        </div>
-    );
+    return <div>404: Page not found</div>;
 };
 
 export default NotFound;

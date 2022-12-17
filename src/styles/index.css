@@ -12,3 +12,35 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(207, 115, 29);
+}
+
+/* Header */
+header {
+    flex: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
+
+/* App */
+.App {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* Footer */
+footer {
+    flex: 0 0 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
