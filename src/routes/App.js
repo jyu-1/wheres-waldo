@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import Timer from "../components/Timer";
 import ImageDisplay from "../components/ImageDisplay";
-import PokemonList from "../components/PokemonList";
+import UtilityBar from "../components/UtilityBar";
 import DropdownMenu from "../components/DropdownMenu";
 
 const App = (props) => {
@@ -9,6 +8,7 @@ const App = (props) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownCoord, setDropdownCoord] = useState([]);
     const [clickedCoord, setClickedCoord] = useState([]);
+    const [wrong, setWrong] = useState(0);
 
     useEffect(() => {
         setFindPoke(props.pokeData);
@@ -48,6 +48,7 @@ const App = (props) => {
                     }
                 } else if (item.name === pokeObj.name) {
                     console.log("Pokemon not Found!");
+                    setWrong(wrong + 1);
                     return item;
                 } else {
                     return item;
@@ -60,9 +61,8 @@ const App = (props) => {
 
     return (
         <div className="App">
-            <Timer />
+            <UtilityBar findPoke={findPoke} wrong={wrong} />
             <ImageDisplay />
-            <PokemonList findPoke={findPoke} />
             {showDropdown ? (
                 <DropdownMenu
                     findPoke={findPoke}
