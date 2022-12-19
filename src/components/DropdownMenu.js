@@ -8,7 +8,16 @@ const DropdownMenu = (props) => {
             }}
         >
             {props.findPoke.map((element, index) => {
-                return <li key={index}>{element.name}</li>;
+                return (
+                    <li
+                        key={index}
+                        onClick={() => {
+                            props.checkPoke(element);
+                        }}
+                    >
+                        {element.name}
+                    </li>
+                );
             })}
         </ul>
     );

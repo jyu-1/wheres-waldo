@@ -8,6 +8,7 @@ const App = (props) => {
     const [findPoke, setFindPoke] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownCoord, setDropdownCoord] = useState([]);
+    const [clickedCoord, setClickedCoord] = useState([]);
 
     useEffect(() => {
         if (props.level === 0) {
@@ -29,12 +30,9 @@ const App = (props) => {
 
     useEffect(() => {
         const dropDownMenu = (event) => {
-            if (showDropdown === false) {
-                setShowDropdown(true);
-                setDropdownCoord([event.pageX, event.pageY]);
-            } else {
-                setShowDropdown(false);
-            }
+            setShowDropdown(true);
+            setDropdownCoord([event.pageX, event.pageY]);
+            setClickedCoord([event.offsetX, event.offsetY]);
         };
 
         const selectImg = document.querySelector(".main-img");
@@ -45,69 +43,77 @@ const App = (props) => {
         };
     }, [showDropdown]);
 
-    //////////////////////////////////////////////////////////////////////
-
-    const getCoord = (e) => {
-        console.log("X: " + e.offsetX);
-        console.log("Y: " + e.offsetY);
-
-        if (
-            e.offsetX > 157 &&
-            e.offsetX < 253 &&
-            e.offsetY > 891 &&
-            e.offsetY < 999
-        ) {
-            console.log("Ivysaur");
-        } else if (
-            e.offsetX > 373 &&
-            e.offsetX < 472 &&
-            e.offsetY > 791 &&
-            e.offsetY < 914
-        ) {
-            console.log("Wartortle");
-        } else if (
-            e.offsetX > 710 &&
-            e.offsetX < 815 &&
-            e.offsetY > 1101 &&
-            e.offsetY < 1255
-        ) {
-            console.log("Blastoise");
-        } else if (
-            e.offsetX > 857 &&
-            e.offsetX < 931 &&
-            e.offsetY > 555 &&
-            e.offsetY < 659
-        ) {
-            console.log("Charmander");
-        } else if (
-            e.offsetX > 6 &&
-            e.offsetX < 168 &&
-            e.offsetY > 17 &&
-            e.offsetY < 179
-        ) {
-            console.log("Charizard");
-        } else if (
-            e.offsetX > 976 &&
-            e.offsetX < 1077 &&
-            e.offsetY > 314 &&
-            e.offsetY < 434
-        ) {
-            console.log("Flareon");
-        } else if (
-            e.offsetX > 803 &&
-            e.offsetX < 904 &&
-            e.offsetY > 1009 &&
-            e.offsetY < 1124
-        ) {
-            console.log("Vaporeon");
-        } else if (
-            e.offsetX > 8 &&
-            e.offsetX < 135 &&
-            e.offsetY > 1259 &&
-            e.offsetY < 1349
-        ) {
-            console.log("Flareon");
+    const checkPoke = (pokeObj) => {
+        if (props.level === 0) {
+            if (
+                clickedCoord[0] > 803 &&
+                clickedCoord[0] < 904 &&
+                clickedCoord[1] > 1009 &&
+                clickedCoord[1] < 1124 &&
+                pokeObj.name === "Vaporeon"
+            ) {
+                console.log("Vaporeon");
+            } else if (
+                clickedCoord[0] > 8 &&
+                clickedCoord[0] < 135 &&
+                clickedCoord[1] > 1259 &&
+                clickedCoord[1] < 1349 &&
+                pokeObj.name === "Jolteon"
+            ) {
+                console.log("Jolteon");
+            } else if (
+                clickedCoord[0] > 976 &&
+                clickedCoord[0] < 1077 &&
+                clickedCoord[1] > 314 &&
+                clickedCoord[1] < 434 &&
+                pokeObj.name === "Flareon"
+            ) {
+                console.log("Flareon");
+            }
+        } else {
+            if (
+                clickedCoord[0] > 157 &&
+                clickedCoord[0] < 253 &&
+                clickedCoord[1] > 891 &&
+                clickedCoord[1] < 999 &&
+                pokeObj.name === "Ivysaur"
+            ) {
+                console.log("Ivysaur");
+            } else if (
+                clickedCoord[0] > 373 &&
+                clickedCoord[0] < 472 &&
+                clickedCoord[1] > 791 &&
+                clickedCoord[1] < 914 &&
+                pokeObj.name === "Wartortle"
+            ) {
+                console.log("Wartortle");
+            } else if (
+                clickedCoord[0] > 710 &&
+                clickedCoord[0] < 815 &&
+                clickedCoord[1] > 1101 &&
+                clickedCoord[1] < 1255 &&
+                pokeObj.name === "Blastoise"
+            ) {
+                console.log("Blastoise");
+            } else if (
+                clickedCoord[0] > 857 &&
+                clickedCoord[0] < 931 &&
+                clickedCoord[1] > 555 &&
+                clickedCoord[1] < 659 &&
+                pokeObj.name === "Charmander"
+            ) {
+                console.log("Charmander");
+            } else if (
+                clickedCoord[0] > 6 &&
+                clickedCoord[0] < 168 &&
+                clickedCoord[1] > 17 &&
+                clickedCoord[1] < 179 &&
+                pokeObj.name === "Charizard"
+            ) {
+                console.log("Charizard");
+            }
         }
+        setShowDropdown(false);
     };
 
     return (
@@ -119,6 +125,7 @@ const App = (props) => {
                 <DropdownMenu
                     findPoke={findPoke}
                     dropdownCoord={dropdownCoord}
+                    checkPoke={checkPoke}
                 />
             ) : null}
         </div>
