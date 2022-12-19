@@ -5,11 +5,21 @@ const UtilityBar = (props) => {
         <div className="util-bar">
             <ul className="utility-list">
                 {props.findPoke.map((element, index) => {
-                    return <li key={index}>{element.name}</li>;
+                    return (
+                        <li key={index}>
+                            <img
+                                src={element.img}
+                                alt="pokemon"
+                                height={80}
+                                width={80}
+                                className={element.found ? "found-poke" : ""}
+                            />
+                        </li>
+                    );
                 })}
             </ul>
-            <Timer />
             <div>Wrong: {props.wrong}</div>
+            <Timer />
         </div>
     );
 };
