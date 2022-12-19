@@ -30,17 +30,31 @@ const App = (props) => {
     }, [showDropdown]);
 
     const checkPoke = (pokeObj) => {
-        findPoke.map((item) => {
-            if (
-                item.name === pokeObj.name &&
-                item.x1 < clickedCoord[0] &&
-                item.x2 > clickedCoord[0] &&
-                item.y1 < clickedCoord[1] &&
-                item.y2 > clickedCoord[1]
-            ) {
-                console.log(item.name);
-            }
-        });
+        setFindPoke(
+            findPoke.map((item) => {
+                if (
+                    item.name === pokeObj.name &&
+                    item.x1 < clickedCoord[0] &&
+                    item.x2 > clickedCoord[0] &&
+                    item.y1 < clickedCoord[1] &&
+                    item.y2 > clickedCoord[1]
+                ) {
+                    if (item.found === false) {
+                        console.log(`FOUND * ${item.name} *`);
+                        return { ...item, found: true };
+                    } else {
+                        console.log(`${item.name} is already Found!`);
+                        return item;
+                    }
+                } else if (item.name === pokeObj.name) {
+                    console.log("Pokemon not Found!");
+                    return item;
+                } else {
+                    return item;
+                }
+            })
+        );
+
         setShowDropdown(false);
     };
 
