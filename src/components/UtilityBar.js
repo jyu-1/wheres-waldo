@@ -14,6 +14,7 @@ const UtilityBar = (props) => {
                                 width={80}
                                 className={element.found ? "found-poke" : ""}
                             />
+                            {element.found ? "Found!" : element.name}
                         </li>
                     );
                 })}
