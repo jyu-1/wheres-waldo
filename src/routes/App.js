@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import Timer from "../components/Timer";
 import ImageDisplay from "../components/ImageDisplay";
 import PokemonList from "../components/PokemonList";
+import DropdownMenu from "../components/DropdownMenu";
 
 const App = (props) => {
     const [findPoke, setFindPoke] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [dropdownCoord, setDropdownCoord] = useState([]);
 
     useEffect(() => {
         if (props.level === 0) {
@@ -23,6 +26,26 @@ const App = (props) => {
             ]);
         }
     }, [props.level]);
+
+    useEffect(() => {
+        const dropDownMenu = (event) => {
+            if (showDropdown === false) {
+                setShowDropdown(true);
+                setDropdownCoord([event.pageX, event.pageY]);
+            } else {
+                setShowDropdown(false);
+            }
+        };
+
+        const selectImg = document.querySelector(".main-img");
+        selectImg.addEventListener("click", dropDownMenu);
+
+        return () => {
+            selectImg.removeEventListener("click", dropDownMenu);
+        };
+    }, [showDropdown]);
+
+    //////////////////////////////////////////////////////////////////////
 
     const getCoord = (e) => {
         console.log("X: " + e.offsetX);
@@ -87,20 +110,17 @@ const App = (props) => {
         }
     };
 
-    useEffect(() => {
-        const selectImg = document.querySelector(".main-img");
-        selectImg.addEventListener("click", getCoord);
-
-        return () => {
-            selectImg.removeEventListener("click", getCoord);
-        };
-    }, []);
-
     return (
         <div className="App">
             <Timer />
             <ImageDisplay />
-            <PokemonList />
+            <PokemonList findPoke={findPoke} />
+            {showDropdown ? (
+                <DropdownMenu
+                    findPoke={findPoke}
+                    dropdownCoord={dropdownCoord}
+                />
+            ) : null}
         </div>
     );
 };
