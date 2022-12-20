@@ -8,7 +8,6 @@ const App = (props) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownCoord, setDropdownCoord] = useState([]);
     const [clickedCoord, setClickedCoord] = useState([]);
-    const [wrong, setWrong] = useState(0);
 
     useEffect(() => {
         setFindPoke(props.pokeData);
@@ -41,6 +40,7 @@ const App = (props) => {
                 ) {
                     if (item.found === false) {
                         console.log(`FOUND * ${item.name} *`);
+                        props.correctHandler(findPoke.length);
                         return { ...item, found: true };
                     } else {
                         console.log(`${item.name} is already Found!`);
@@ -48,7 +48,7 @@ const App = (props) => {
                     }
                 } else if (item.name === pokeObj.name) {
                     console.log("Pokemon not Found!");
-                    setWrong(wrong + 1);
+                    props.wrongHandler();
                     return item;
                 } else {
                     return item;
@@ -61,7 +61,7 @@ const App = (props) => {
 
     return (
         <div className="App">
-            <UtilityBar findPoke={findPoke} wrong={wrong} />
+            <UtilityBar findPoke={findPoke} wrong={props.wrong} />
             <ImageDisplay />
             {showDropdown ? (
                 <DropdownMenu

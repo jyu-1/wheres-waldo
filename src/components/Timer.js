@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
+import { TimeContext } from "./TimeContext";
 
 const Timer = () => {
-    const [active, setActive] = useState(true);
-    const [time, setTime] = useState(0);
+    const { time, setTime } = useContext(TimeContext);
 
     useEffect(() => {
         let interval;
 
-        if (active === true) {
-            interval = setInterval(() => {
-                setTime((prevTime) => prevTime + 1);
-            }, 1000);
-        } else {
-            clearInterval(interval);
-        }
+        interval = setInterval(() => {
+            setTime((prevTime) => prevTime + 1);
+        }, 1000);
 
         return () => {
             clearInterval(interval);
         };
-    }, [active]);
+    }, [setTime]);
 
     return (
         <div>
