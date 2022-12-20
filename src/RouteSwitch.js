@@ -3,11 +3,12 @@ import App from "./routes/App";
 import NotFound from "./routes/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Data from "./Data";
 import StartGame from "./routes/StartGame";
 import EndGame from "./routes/EndGame";
 import { TimeContext } from "./components/TimeContext";
 import { useEffect, useState } from "react";
+import { db } from "./firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const RouteSwitch = () => {
     const [pokeData, setPokeData] = useState([]);
@@ -17,10 +18,12 @@ const RouteSwitch = () => {
     const [pokeLength, setPokeLength] = useState(0);
     const [time, setTime] = useState(0);
 
+    const [fetchPoke, setFetchPoke] = useState([]);
+
     const startingGame = () => {
-        const randomLevel = Math.floor(Math.random() * Data.levels);
-        setPokeData(Data[randomLevel]);
-        setPokeLength(Data[randomLevel].length);
+        const randomLevel = Math.floor(Math.random() * fetchPoke.length);
+        setPokeData(fetchPoke[randomLevel].poke);
+        setPokeLength(fetchPoke[randomLevel].poke.length);
         setWrong(0);
         setCorrect(0);
         setTime(0);
@@ -40,6 +43,20 @@ const RouteSwitch = () => {
             setGameState(2);
         }
     }, [correct, pokeLength]);
+
+    useEffect(() => {
+        const pokeCollectionRef = collection(db, "poke-info");
+        const getPoke = async () => {
+            const data = await getDocs(pokeCollectionRef);
+            setFetchPoke(
+                data.docs.map((doc) => {
+                    return { ...doc.data(), id: doc.id };
+                })
+            );
+        };
+
+        getPoke();
+    }, []);
 
     return (
         <BrowserRouter basename="wheres-waldo">

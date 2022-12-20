@@ -51,8 +51,15 @@ header {
 }
 
 .start-page > div {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
+}
+
+.start-page > input {
+    text-align: center;
+    height: 75px;
+    width: 400px;
+    font-size: 2rem;
 }
 
 .start-page > button:hover {
@@ -174,6 +181,7 @@ ul {
 
 .alert-modal:empty {
     padding: 0;
+    opacity: 0;
 }
 
 .alert-modal.green {
