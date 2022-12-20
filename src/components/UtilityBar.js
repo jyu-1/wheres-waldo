@@ -7,6 +7,7 @@ const UtilityBar = (props) => {
                 {props.findPoke.map((element, index) => {
                     return (
                         <li key={index}>
+                            {element.found ? "Found!" : element.name}
                             <img
                                 src={element.img}
                                 alt="pokemon"
@@ -14,12 +15,11 @@ const UtilityBar = (props) => {
                                 width={80}
                                 className={element.found ? "found-poke" : ""}
                             />
-                            {element.found ? "Found!" : element.name}
                         </li>
                     );
                 })}
             </ul>
-            <div>Wrong: {props.wrong}</div>
+            <div className="util-wrong">Wrong: {props.wrong}</div>
             <Timer />
         </div>
     );

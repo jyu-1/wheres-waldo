@@ -10,6 +10,7 @@ const DropdownMenu = (props) => {
             {props.findPoke.map((element, index) => {
                 return (
                     <li
+                        className={`${element.found ? "found" : ""}`}
                         key={index}
                         onClick={() => {
                             props.checkPoke(element);
