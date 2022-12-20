@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import ImageDisplay from "../components/ImageDisplay";
 import UtilityBar from "../components/UtilityBar";
 import DropdownMenu from "../components/DropdownMenu";
+import Alert from "../components/Alert";
 
 const App = (props) => {
     const [findPoke, setFindPoke] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownCoord, setDropdownCoord] = useState([]);
     const [clickedCoord, setClickedCoord] = useState([]);
+    const [alert, setAlert] = useState("");
 
     useEffect(() => {
         setFindPoke(props.pokeData);
@@ -28,6 +30,16 @@ const App = (props) => {
         };
     }, [showDropdown]);
 
+    useEffect(() => {
+        const clearMessage = setTimeout(() => {
+            setAlert("");
+        }, 2500);
+
+        return () => {
+            clearTimeout(clearMessage);
+        };
+    }, [alert]);
+
     const checkPoke = (pokeObj) => {
         setFindPoke(
             findPoke.map((item) => {
@@ -39,15 +51,15 @@ const App = (props) => {
                     item.y2 > clickedCoord[1]
                 ) {
                     if (item.found === false) {
-                        console.log(`FOUND * ${item.name} *`);
+                        setAlert(`You found ${item.name}!`);
                         props.correctHandler(findPoke.length);
                         return { ...item, found: true };
                     } else {
-                        console.log(`${item.name} is already Found!`);
+                        setAlert(`${item.name} is already Found!`);
                         return item;
                     }
                 } else if (item.name === pokeObj.name) {
-                    console.log("Pokemon not Found!");
+                    setAlert("Pokemon not Found!");
                     props.wrongHandler();
                     return item;
                 } else {
@@ -70,6 +82,7 @@ const App = (props) => {
                     checkPoke={checkPoke}
                 />
             ) : null}
+            <Alert alert={alert} />
         </div>
     );
 };
