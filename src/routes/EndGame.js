@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import Alert from "../components/Alert";
 import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import Ranking from "../components/Ranking";
 
 const EndGame = (props) => {
     const [name, setName] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [alert, setAlert] = useState("");
+    const [showRanking, setShowRanking] = useState(false);
 
     const rankingCollection = collection(db, "ranking");
 
@@ -26,6 +28,10 @@ const EndGame = (props) => {
             setSubmitted(true);
             addScore();
         }
+    };
+
+    const closeRanking = () => {
+        setShowRanking(false);
     };
 
     useEffect(() => {
@@ -69,10 +75,17 @@ const EndGame = (props) => {
                     </button>
                 </>
             ) : (
-                <div>{name}</div>
+                <button
+                    onClick={() => {
+                        setShowRanking(true);
+                    }}
+                >
+                    Ranking
+                </button>
             )}
             <button onClick={props.startingGame}>Play Again</button>
             <Alert alert={alert} />
+            {showRanking ? <Ranking closeRanking={closeRanking} /> : null}
         </div>
     );
 };
