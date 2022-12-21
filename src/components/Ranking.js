@@ -13,7 +13,7 @@ const Ranking = (props) => {
     const [ranking, setRanking] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = () => {
             const rankingCollection = collection(db, "ranking");
             const rankQuery = query(
                 rankingCollection,
